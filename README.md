@@ -27,16 +27,32 @@ CORS confirugration
 # If in your project setted larger, then this directive is not required
 map_hash_bucket_size 256;
 
-# Endpoints which can CORS supported
-map "$scheme://$host$request_uri" $cors_supported {
-	"https://api.project.com/user/info" "$host$request_uri";
-	~https://api.auth.project.com/(login|logout) "$host$request_uri";
+# Setup the $cors_path variable
+map $request_uri $cors_path {
+	~^(?<path>[^?]+) $path;
 }
 
-# Origin and Endpoints for which enabled CORS
-map "$http_origin--->$cors_supported" $cors_enabled {
-	~https://(foo|bar)\.client\.com--->api\.project\.com/user/info "true";
-	~https://(foo|bar)\.client\.com--->api\.auth\.project\.com/(login|logout) "true";
+# Convert Endpoints to CORS service
+map "$scheme://$host$cors_path" $cors_service {
+	"https://api.project.com/user/info" "cors.service.user-info";
+	~https://api.auth.project.com/(login|logout)$ "cors.service.auth";
+	default "<<unknown>>";
+}
+
+# Convert Origin to CORS client
+map "$http_origin" $cors_client {
+	~https://(foo|bar)\.client\.com "cors.client.$1"; # "cors.client.foo" or "cors.client.bar";
+	default "<<unknown>>";
+}
+
+# Turn on CORS by client and service map
+map "$cors_client -> $cors_service" $cors_enabled {
+	# Access for 'foo' client
+	"cors.client.foo -> cors.service.auth" "true";
+	"cors.client.foo -> cors.service.user-info" "true";
+
+	# Access for 'bar' client
+	"cors.client.bar -> cors.service.auth" "true";
 }
 ```
 
