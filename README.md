@@ -84,7 +84,7 @@ location /api/user/exists {
 
 ### Variables
 
-See detail in source: [./cors.conf](./cors.conf#L1-L9)
+See detail in source: [./cors.conf](./cors.conf#L1-L8)
 
 ---
 
