@@ -194,3 +194,13 @@ map "$cors_client -> $cors_service" $cors_enabled {
 	"cors.client.business.account -> cors.service.auth" "true";
 }
 ```
+
+and
+
+```nginx
+location ~ '/api/auth/(login|logout)' {
+	add_header X-My-Header "true"; # It's work!
+	set $cors_allow_expose_headers "X-My-Header";
+	inclide "ngxin-cors/cors.conf";
+}
+```
