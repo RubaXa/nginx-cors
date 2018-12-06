@@ -73,7 +73,7 @@ http {
 
 ### Variables
 
-See detail in source: [./cors.conf](./cors.conf)
+See detail in source: [./cors.conf](./cors.conf#L1-L9)
 
 ---
 
