@@ -36,7 +36,7 @@ map "$scheme://$host$request_uri" $cors_supported {
 # Origin and Endpoints for which enabled CORS
 map "$http_origin--->$cors_supported" $cors_enabled {
 	~https://(foo|bar)\.client\.com--->api\.project\.com/user/info "true";
-	~https://(foo|bar)\.client\.com--->api.auth.project.com/(login|logout) "true";
+	~https://(foo|bar)\.client\.com--->api\.auth\.project\.com/(login|logout) "true";
 }
 ```
 
