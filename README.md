@@ -69,6 +69,17 @@ http {
 }
 ```
 
+### OR
+
+```nginx
+location /api/user/exists {
+	if ($http_origin = 'https://client.com' {
+		set $cors_enabled 'true';
+	}
+	include 'cors.conf';
+}
+```
+
 ---
 
 ### Variables
