@@ -45,7 +45,7 @@ map "$http_origin--->$cors_supported" $cors_enabled {
 ```nginx
 http {
 	# One (!)
-	include "cors-enabled.conf";
+	include 'cors-enabled.conf';
 
 	server {
 		listen 80;
@@ -53,7 +53,7 @@ http {
 
 		location /user/info {
 			# Two (!!)
-			include 'cors.conf';
+			include 'nginx-cors/cors.conf';
 		}
 	}
 
@@ -63,7 +63,7 @@ http {
 
 		location ~/(login|logout) {
 			# Three (!!!)
-			include 'cors.conf';
+			include 'nginx-cors/cors.conf';
 		}
 	}
 }
@@ -76,7 +76,7 @@ location /api/user/exists {
 	if ($http_origin = 'https://client.com') {
 		set $cors_enabled 'true';
 	}
-	include 'cors.conf';
+	include 'nginx-cors/cors.conf';
 }
 ```
 
