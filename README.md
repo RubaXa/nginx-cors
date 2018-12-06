@@ -2,6 +2,12 @@ nginx-cors
 ----------
 Turn on the CORS by Feng Shui... maybe 🙃
 
+### Featuring
+
+- Easy and clear to use
+- Does not use `add_header` into `if` (therefore, your headers will not be lost)
+- Configurable and flexibility
+
 ---
 
 ### Install
