@@ -100,7 +100,7 @@ location /api/user/exists {
 
 ### Variables
 
-See detail in source: [./cors.conf](./cors.conf#L1-L8)
+See detail in source: [cors.conf](./cors.conf#L1-L9)
 
 ---
 
