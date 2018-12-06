@@ -73,7 +73,7 @@ http {
 
 ```nginx
 location /api/user/exists {
-	if ($http_origin = 'https://client.com' {
+	if ($http_origin = 'https://client.com') {
 		set $cors_enabled 'true';
 	}
 	include 'cors.conf';
