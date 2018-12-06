@@ -79,6 +79,7 @@ http {
 
 		location ~/(login|logout) {
 			# Three (!!!)
+			set $cors_allow_credentials "true";
 			include 'nginx-cors/cors.conf';
 		}
 	}
