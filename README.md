@@ -171,7 +171,7 @@ map $request_uri $cors_path {
 
 # Convert endpoints to CORS service
 map "$scheme://$host$cors_path" $cors_service {
-	~https://project.com/api/(login|logout)$ "cors.service.auth";
+	~^https://project.com/api/(login|logout)$ "cors.service.auth";
 	default "<<unknown>>";
 }
 
@@ -179,9 +179,9 @@ map "$scheme://$host$cors_path" $cors_service {
 map "$http_origin" $cors_client {
 	# Yes, it would be possible to write in one regexp, but it is much more readable and more flexible.
 	# In addition, you need to list subdomains! Why so? See next `map` ;]
-	~^https://([^\.]+)\.business.com" "cors.client.business.$1";
-	~^https://([^\.]+)\.test\.business.com" "cors.client.business.$1";
-	~^https://([^\.]+)\.(alpha|beta|omega)\.test\.business.com" "cors.client.business.$1";
+	~^https://([^\.]+)\.business.com$" "cors.client.business.$1";
+	~^https://([^\.]+)\.test\.business.com$" "cors.client.business.$1";
+	~^https://([^\.]+)\.(alpha|beta|omega)\.test\.business.com$" "cors.client.business.$1";
 	default "<<unknown>>";
 }
 
@@ -189,9 +189,10 @@ map "$http_origin" $cors_client {
 map "$cors_client -> $cors_service" $cors_enabled {
 	# And now we can clearly and elegantly include rights
 	# based on the "$cors_client" and the "$cors_service" to which "client" invoke!
-	"cors.client.business.about   -> cors.service.auth" "false";
+	"cors.client.business.about -> cors.service.auth"   "false";
 	"cors.client.business.company -> cors.service.auth" "true";
 	"cors.client.business.account -> cors.service.auth" "true";
+	default "false";
 }
 ```
 
