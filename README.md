@@ -41,13 +41,13 @@ map $request_uri $cors_path {
 # Convert Endpoints to CORS service
 map "$scheme://$host$cors_path" $cors_service {
 	"https://api.project.com/user/info" "cors.service.user-info";
-	~https://api.auth.project.com/(login|logout)$ "cors.service.auth";
+	~^https://api.auth.project.com/(login|logout)$ "cors.service.auth";
 	default "<<unknown>>";
 }
 
 # Convert Origin to CORS client
 map "$http_origin" $cors_client {
-	~https://(foo|bar)\.client\.com "cors.client.$1"; # "cors.client.foo" or "cors.client.bar";
+	~^https://(foo|bar)\.client\.com$ "cors.client.$1"; # "cors.client.foo" or "cors.client.bar";
 	default "<<unknown>>";
 }
 
