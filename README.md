@@ -121,7 +121,7 @@ Thx.
 
 ### Compare
 
-#### Classical bugy way
+#### Classical bugy way 💩
 
 - It's hard to read who exactly enabled CORS
 - It is easy to make a mistake in RegExp
@@ -157,7 +157,7 @@ location ~ '/api/auth/(login|logout)' {
 ```
 
 
-#### True way
+### True way 👍
 
 - Easy to read and maintain.
 - Flexible configuration
