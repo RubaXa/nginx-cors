@@ -47,20 +47,21 @@ map $request_uri $cors_path {
 # Convert Endpoints to CORS service
 map "$scheme://$host$cors_path" $cors_service {
   "https://api.project.com/user/info" "cors.service.user-info";
-  ~^https://api.auth.project.com/(login|logout)$ "cors.service.auth";
+  ~^https:\/\/api.auth.project.com\/(login|logout)$ "cors.service.auth";
   default "<<unknown>>";
 }
 
 # Convert Origin to CORS client
 map "$http_origin" $cors_client {
-  ~^https://(foo|bar)\.client\.com$ "cors.client.$1"; # "cors.client.foo" or "cors.client.bar";
+  # "cors.client.foo" or "cors.client.bar";
+  ~^https:\/\/(foo|bar)\.client\.com$ "cors.client.$1";
   default "<<unknown>>";
 }
 
 # Turn on CORS by client and service map
 map "$cors_client -> $cors_service" $cors_enabled {
   # Access for 'foo' client
-  "cors.client.foo -> cors.service.auth" "true";
+  "cors.client.foo -> cors.service.auth"      "true";
   "cors.client.foo -> cors.service.user-info" "true";
 
   # Access for 'bar' client
@@ -72,7 +73,7 @@ map "$cors_client -> $cors_service" $cors_enabled {
 
 ```nginx
 http {
-  # 1️⃣ Setup CORS for all services (!)
+  # 1️⃣Setup CORS for all services (!)
   include 'cors.setup.conf';
 
   server {
@@ -177,7 +178,7 @@ map $request_uri $cors_path {
 
 # Convert endpoints to CORS service
 map "$scheme://$host$cors_path" $cors_service {
-  ~^https://project.com/api/(login|logout)$ "cors.service.auth";
+  ~^https:\/\/project.com/api/(login|logout)$ "cors.service.auth";
   default "<<unknown>>";
 }
 
@@ -185,9 +186,9 @@ map "$scheme://$host$cors_path" $cors_service {
 map "$http_origin" $cors_client {
   # Yes, it would be possible to write in one regexp, but it is much more readable and more flexible.
   # In addition, you need to list subdomains! Why so? See next `map` ;]
-  ~^https://([^\.]+)\.business.com$" "cors.client.business.$1";
-  ~^https://([^\.]+)\.test\.business.com$" "cors.client.business.$1";
-  ~^https://([^\.]+)\.(alpha|beta|omega)\.test\.business.com$" "cors.client.business.$1";
+  ~^https:\/\/([^\.]+)\.business\.com$" "cors.client.business.$1";
+  ~^https:\/\/([^\.]+)\.test\.business\.com$" "cors.client.business.$1";
+  ~^https:\/\/([^\.]+)\.(alpha|beta|omega)\.test\.business\.com$" "cors.client.business.$1";
   default "<<unknown>>";
 }
 
