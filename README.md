@@ -10,6 +10,12 @@ Turn on the CORS by Feng Shui... maybe 🙃
 
 ---
 
+### Articles
+
+- [NGINX vs. CORS (ru)](https://medium.com/@ibnRubaXa/nginx-vs-cors-7a63029d9a34)
+
+---
+
 ### Install
 
 ```sh
